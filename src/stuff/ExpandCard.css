@@ -1,0 +1,48 @@
+.inventory-list{
+    display:grid;
+    place-items: center;
+
+}
+
+
+
+.inventory-card {
+    width: 800px; /* Initial width */
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px;
+    background-color: rgb(235, 219, 234);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; /* Smooth expansion animation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    margin-bottom: 20px;
+    display: grid;
+    place-items: center;
+  }
+  
+  .inventory-card.expanded {
+    height:200px;
+    
+  }
+  
+  .card-header {
+    text-align: center;
+    font-weight: bold; /* Bold title */
+  }
+  
+  .card-details {
+    margin-top: 10px;
+  }
+  
+  .card-details p {
+    margin-bottom: 5px; /* Spacing for description and quantity */
+  }
+  
+  .button-container{
+    display:flex;
+    
+  }
+  .first_apperarance{
+    display: flex;
+    justify-content:end;
+  }
