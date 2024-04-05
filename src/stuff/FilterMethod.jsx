@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import InventoryCard from './InventoryDetails';
 import './FilterMethod.css';
-import CardComponent from './PopupCard'; // Import the CardComponent
-import EmployeeSelect from './EmployeeFilterComponent'
-import InventoryTypeSelect from './InventoryTypeFilterComponent'
+import CardComponent from './PopupCard'; 
+import EmployeeSelect from './EmployeeFilterComponent';
+import InventoryTypeSelect from './InventoryTypeFilterComponent';
+import AdvancedButton from './AdvancedButton'
+//import CardComponent2 from './EditInventory';
+
+
 
 
 function InventoryFilter() {
@@ -86,25 +90,35 @@ function InventoryFilter() {
     };
 
     return (
-        <div>
-            <h2 className='heading'>Inventory Manager</h2>
-          
-            <button onClick={togglePopup}>Add New Inventory</button>
-          
-             <EmployeeSelect
+        <div className='container'>
+            <h2 className='heading' >Inventory Manager</h2>
+          <div className='add-button'>
+          <button onClick={togglePopup}>Add New Inventory</button>
+          </div>
+        
+           
+          <div className='employee-filter'>
+          <EmployeeSelect
                 employees={employees}
                 selectedEmployeeId={selectedEmployeeId}
                 handleEmployeeChange={handleEmployeeChange}
             />
-          
-            <InventoryTypeSelect
+          </div>
+             
+          <div className='inventory-filter'>
+          <InventoryTypeSelect
              inventoryTypes={inventoryTypes} 
              selectedInventoryTypeId={selectedInventoryTypeId} 
              handleInventoryTypeChange={handleInventoryTypeChange}
               />
+          </div>
+           
+
+           
               
             <InventoryCard inventories={inventories} />
-            {showPopup && <CardComponent handleClose={togglePopup} />} {/* Render the CardComponent only if showPopup is true */}
+            {showPopup && <CardComponent handleClose={togglePopup}/>} 
+           
         </div>
     );
 }

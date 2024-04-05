@@ -10,7 +10,9 @@ import './App.css';
 import Create from './stuff/Create';
 import DropdownMenu from './stuff/DropdownMenu'
 import AdvancedButton from './stuff/AdvancedButton'
-import MyTable from './stuff/Table'
+import MyTable from './stuff/Table';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 
 const App = () => {
@@ -24,7 +26,8 @@ const App = () => {
       </div>
       <Route exact path = "/" component = {InventoryFilter} /> */}
       {/* <Create/> */}
-       <InventoryFilter/> 
+       <InventoryFilter/>  
+      
       {/* <DropdownMenu/> */}
       {/* <AdvancedButton >Click Me</AdvancedButton> */}
       

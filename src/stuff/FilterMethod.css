@@ -30,6 +30,37 @@
     background-color: rgb(208, 176, 235);
     height:40px;
     border-radius: 20px;
+    
+} 
+ .heading{
+    width:30%;
+    position: relative;
+    left:300px;
+    
+    color:#900546;
+    font-size: 30px;
+    display: block;
+} 
+.add-button{
+    width:30%;
+    position:relative;
+    left:270px;
+    top:100px;
 }
 
 
+ .employee-filter{
+ position: relative;
+ right:400px;
+}
+
+.inventory-filter{
+    position: relative;
+    bottom:50px;
+    left:-720px;
+}
+.container{
+    position: relative;
+    top: 200px;
+} 
+ 

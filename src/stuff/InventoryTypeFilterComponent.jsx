@@ -14,6 +14,7 @@
 // export default InventoryTypeSelect;
 
 import React, { useState } from 'react';
+import './DropdownMenu.css'
 
 function InventoryTypeSelect({ inventoryTypes, selectedInventoryTypeId, handleInventoryTypeChange }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -29,13 +30,13 @@ function InventoryTypeSelect({ inventoryTypes, selectedInventoryTypeId, handleIn
     };
 
     return (
-        <div className="inventory-type-select">
+        <div className="employee-select">
             <div className='dropdown-container'>
-            <label htmlFor="inventoryType" className="dropdown-toggle" onClick={toggleDropdown}>
-                Select Inventory Type:
-            </label>
+            <button  htmlFor = "inventoryType" className="dropdown-toggle" onClick={toggleDropdown}>
+            none
+            </button>
             {isOpen && (
-                <ul id="inventoryType" className='dropdown-menu'>
+                <ul id = "inventoryType" className = 'dropdown-menu'>
                    
                     {inventoryTypes.map(type => (
                         <li key={type.inventoryTypeId} value={type.inventoryTypeId} className= 'dropdown-item'  onClick={() => handleSelect(type.inventoryTypeId)}>

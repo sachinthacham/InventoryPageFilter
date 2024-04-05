@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
+
 
 function Create() {
   const [values, setValues] = useState({
@@ -9,6 +10,28 @@ function Create() {
     CreatedBy: '',
     Deleted: false // Assuming Deleted should default to false
 });
+const [inventoryTypes, setInventoryTypes] = useState([]);
+const [selectedInventoryTypeId, setSelectedInventoryTypeId] = useState('');
+
+useEffect(() => {
+  
+  fetchInventoryTypes();
+  
+}, [selectedInventoryTypeId]);
+
+const fetchInventoryTypes = async () => {
+  try {
+      const response = await fetch('https://localhost:7166/api/inventory_type/inventory_types');
+      if (!response.ok) {
+          throw new Error('Failed to fetch inventory types');
+      }
+      const data = await response.json();
+      setInventoryTypes(data);
+  } catch (error) {
+      console.error('Error fetching inventory types:', error);
+  }
+};
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,13 +42,18 @@ function Create() {
       console.log(err);
     }
   }
+  const handleInventoryTypeChange = (selectedInventoryTypeId) => {
+       
+    setSelectedInventoryTypeId(selectedInventoryTypeId);
+};
+
 
   return (
     <div>
       <div>
         <h1>Add an Inventory</h1>
         <form onSubmit={handleSubmit}>
-          <div className='mb-2'>
+          {/* <div className='mb-2'>
             <label htmlFor="InventoryTypeId">Inventory Type ID:</label>
             <input
               type="number"
@@ -35,7 +63,9 @@ function Create() {
               value={values.InventoryTypeId}
               onChange={e => setValues({ ...values, InventoryTypeId: e.target.value })}
             />
-          </div>
+          </div> */}
+        
+           
           <div className='mb-2'>
             <label htmlFor="InventoryName">Inventory Name:</label>
             <input

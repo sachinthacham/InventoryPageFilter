@@ -1,8 +1,11 @@
 
 
-const DeleteIcon = ({size}) => {
+
+const DeleteIcon = ({size,color }) => {
     const iconStyle = {
-        fontSize:size
+        fontSize:size,
+        color:color 
+       
     }
     return <i className="fas fa-trash-alt" style={iconStyle}></i>;
   };

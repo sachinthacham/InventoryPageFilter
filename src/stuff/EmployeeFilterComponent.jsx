@@ -15,6 +15,7 @@
 // }
 
 // export default EmployeeSelect;
+
 import React, { useState } from 'react';
 import './DropdownMenu.css'
 
@@ -36,7 +37,7 @@ function EmployeeSelect({ employees, selectedEmployeeId, handleEmployeeChange })
         <div className="employee-select">
             <div className="dropdown-container">
             <button htmlFor = "employee" className = "dropdown-toggle" onClick = {toggleDropdown}>
-                Select Employee:
+                none
             </button>
             {isOpen && (
                 <ul id="employee" className='dropdown-menu'>
