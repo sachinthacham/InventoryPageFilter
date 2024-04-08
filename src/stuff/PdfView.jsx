@@ -18,7 +18,7 @@ const PdfViewer = ({ pdfUrl, thumbnailUrl }) => {
 
   return (
     <>
-      <img src={thumbnailUrl} alt="Thumbnail" className='thumbnail-image' onClick={openModal} style={{height:"50px",width:"50px"}}/>
+      <img src={thumbnailUrl} alt="Thumbnail" className='thumbnail-image' onClick={openModal} style={{height:"80px",width:"80px"}}/>
       <Modal isOpen={isOpen} closeModal={closeModal}>
         <Document file={pdfUrl}>
           <Page pageNumber={2} />

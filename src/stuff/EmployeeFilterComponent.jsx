@@ -37,7 +37,7 @@ function EmployeeSelect({ employees, selectedEmployeeId, handleEmployeeChange })
         <div className="employee-select">
             <div className="dropdown-container">
             <button htmlFor = "employee" className = "dropdown-toggle" onClick = {toggleDropdown}>
-                none
+                select a Employee
             </button>
             {isOpen && (
                 <ul id="employee" className='dropdown-menu'>

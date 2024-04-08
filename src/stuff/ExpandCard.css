@@ -2,7 +2,7 @@
   .inventory-card {
     width: 800px; 
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 0px 0px 10px 10px;
     padding: 0px;
     background-color:white;
     cursor: pointer;
@@ -18,13 +18,23 @@
    
   }
   .initial-card{
-    height:100px;
+    border: 1px solid #ddd;
+   
+    border-radius: 10px 10px 0px 0px;
+    height:50px;
     width: 800px;
-    background-color: burlywood; 
+    background-color: #fff; 
+  }
+  .initial-card:hover{
+    background-color: rgba(210, 208, 208, 0.561);
+  }
+
+  .initial-card.expanded{
+    background-color: rgb(242, 161, 184);
   }
   
   .inventory-card.expanded {
-    height: 500px;
+    height: 300px;
     opacity: 1;
    
   }
@@ -34,11 +44,84 @@
     font-weight: bold; 
   }
   
-  .card-details {
+  .details{
     margin-top: 10px;
+    margin-left: 30px;
+    width: 800px;
+    height:300px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    grid-auto-rows:minmax(20px,auto);
+    grid-template-areas: 
+    "a a a b"
+    "c c c z"
+    "d d d z"
+    "e e f f"
+    ;
+    position: relative;
+   
+  }
+  .button_arrange{
+      grid-area: b;
+      position: absolute;
+      top:0px;
+      right:30px;
+  }
+  .InventoryName-ex{
+    grid-area: a;
+    position: absolute;
+    right:80px;
+    top: 20px;
+    
+    width: 500px;
+    display: flex;
+    justify-content: left;
+  }
+  .InventoryType-ex{
+    grid-area: c;
+    position: absolute;
+    right:80px;
+    top: -5px;
+    
+    margin-left: 0;
+    width: 500px;
+   
+    display: flex;
+    justify-content: left;
+    
+  }
+  .AssignedEmployee{
+    grid-area: d;
+    position: absolute;
+    right:80px;
+    top:-30px;
+    width: 500px;
+    display: flex;
+    justify-content: left;
+    
+    
+  }
+  .InventoryFile-ex{
+    grid-area: e;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    left:20px;
+    bottom: 30px;
+   
+    
+    
+  }
+  .InventoryImage-ex{
+    grid-area: f;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width:200px;
+   bottom: 27px;
   }
   
-   .card-details p {
+   .details p {
     margin-bottom: 5px; 
   }
   
@@ -50,14 +133,21 @@
   .inventorylist_init{
     list-style-type: none;
     display: flex;
-    width:600px;
-    justify-content: space-between;
+    width:500px;
+  }
+  .inventorylist_init-name{
+    position: relative;
+    left:100px;
+    top: 8px;
   }
 
   .button_arrange{
-    display:flex;
+  
+    height: 50px;
+    display: flex;
     justify-content: space-around;
-    width:100px;
+    width:200px;
+    float:right;
   }
 
   .inventory-card-container{
@@ -67,3 +157,15 @@
     width:600px;
     
   }  
+
+  .dropdownicon{
+   position: relative;
+   left:50px; 
+   color:gray;
+   font-size:30px;
+   transition: transform 0.5s ease-out;
+  }
+  .dropdownicon.expanded{
+    transform: rotate(90deg);
+   
+  }

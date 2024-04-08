@@ -5,7 +5,7 @@ const EditIcon = ({size}) => {
         fontSize:size
     }
     return(
-        <i className="fas fa-edit" style={iconStyle}></i>
+        <i class="fa-solid fa-pen-to-square" style={iconStyle}></i>
     );
     
     

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import './ImagePopup.css'; // Import your CSS file
 
-function ImageThumbnail({ imageUrl }) {
+function ImagePopup({ imageUrl }) {
     const [showModal, setShowModal] = useState(false);
 
     const handleClick = () => {
         setShowModal(true);
     };
 
+    
+
     return (
         <div>
-            <img src={imageUrl} alt="Thumbnail" onClick={handleClick} className="thumbnail-image"/>
+            <img src={imageUrl} alt="Thumbnail" onClick={handleClick} className="thumbnail-image" style={{height:"80px",width:"80px"}}/>
             {showModal && (
                 <div className="modal">
                     <div className="modal-content">
@@ -23,4 +25,4 @@ function ImageThumbnail({ imageUrl }) {
     );
 }
 
-export default ImageThumbnail;
+export default ImagePopup;

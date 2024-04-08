@@ -33,7 +33,7 @@ function InventoryTypeSelect({ inventoryTypes, selectedInventoryTypeId, handleIn
         <div className="employee-select">
             <div className='dropdown-container'>
             <button  htmlFor = "inventoryType" className="dropdown-toggle" onClick={toggleDropdown}>
-            none
+             select the inventory type
             </button>
             {isOpen && (
                 <ul id = "inventoryType" className = 'dropdown-menu'>

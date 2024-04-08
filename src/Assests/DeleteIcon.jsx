@@ -7,7 +7,7 @@ const DeleteIcon = ({size,color }) => {
         color:color 
        
     }
-    return <i className="fas fa-trash-alt" style={iconStyle}></i>;
+    return <i class="fa-solid fa-trash"style={iconStyle}></i>;
   };
   
   export default DeleteIcon;

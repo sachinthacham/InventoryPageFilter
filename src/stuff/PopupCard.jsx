@@ -278,6 +278,8 @@
 import React, { useState, useEffect } from 'react';
 import './popup.css'; // Import your CSS file
 import axios from 'axios';
+import EmployeeSelect from './EmployeeFilterComponent';
+import InventoryTypeSelect from './InventoryTypeFilterComponent';
 
 function CardComponent({ handleClose }) {
     const [values, setValues] = useState({
@@ -292,6 +294,8 @@ function CardComponent({ handleClose }) {
 
     const [inventoryTypes, setInventoryTypes] = useState([]);
     const [employees, setEmployees] = useState([]);
+    const [selectedEmployeeId, setSelectedEmployeeId] = useState('');
+    const [selectedInventoryTypeId, setSelectedInventoryTypeId] = useState('');
 
     useEffect(() => {
         fetchInventoryTypes();
@@ -340,9 +344,9 @@ function CardComponent({ handleClose }) {
             formData.append('image', values.image);
 
             const otherData = {
-                InventoryTypeId: values.InventoryTypeId,
+                InventoryTypeId:selectedInventoryTypeId ,
                 InventoryName: values.InventoryName,
-                employeeId: values.employeeId,
+                employeeId:selectedEmployeeId ,
                 CreatedBy: 2,
                 Deleted: values.Deleted
             };
@@ -371,35 +375,61 @@ function CardComponent({ handleClose }) {
         }
     };
 
+    const handleEmployeeChange = (selectedEmployeeId) => {
+        
+        setSelectedEmployeeId(selectedEmployeeId);
+    };
+
+    const handleInventoryTypeChange = (selectedInventoryTypeId) => {
+       
+        setSelectedInventoryTypeId(selectedInventoryTypeId);
+    };
+
+    const getInventoryTypeName = (selectedInventoryTypeId) => {
+        const inventory = inventoryTypes.find(type => type.inventoryTypeId === selectedInventoryTypeId);
+        return inventory ? inventory.inventoryType : '';
+    };
+
+    const getEmployeeName = (selectedEmployeeId) => {
+        const employee = employees.find(employee => employee.employeeId === selectedEmployeeId);
+        return employee ? employee.firstName +" " + employee.lastName: ''; 
+    }
+
+
     return (
         <div className="popup">
             <div className="popup-inner">
                 <form onSubmit={handleSubmit}>
                     <div className="InventorySelect">
-                        <label className='Inventory-label'>Select inventory type:</label>
-                        <div className='mb-2'>
-                            <label htmlFor="InventoryTypeId">Inventory Type ID:</label>
-                            <input
-                                name="InventoryTypeId"
-                                className='form-control'
-                                placeholder="Enter Inventory Type ID"
-                                value={values.InventoryTypeId}
-                                onChange={e => setValues({ ...values, InventoryTypeId: e.target.value })}
-                            />
+                        <label className ='Inventory-label'>Select inventory type:</label>
+                        <div className ='mb-2'>
+                        <label className ='Inventory-label'>Inventory Type ID:{getInventoryTypeName(selectedInventoryTypeId)}</label>
+                       
+                           
+                            <div className='inventory-filter'>
+                                <InventoryTypeSelect
+                                inventoryTypes={inventoryTypes} 
+                                selectedInventoryTypeId={selectedInventoryTypeId} 
+                                handleInventoryTypeChange={handleInventoryTypeChange}
+                                    />
+                                </div>
+                               
                         </div>
                     </div>
 
                     <div className="employeeSelect">
-                        <label className='inventory-label'>Assign to: </label>
+                        
                         <div className='mb-3'>
-                            <label htmlFor="employeeId">Employee ID:</label>
-                            <input
-                                name="employeeId"
-                                className='form-control'
-                                placeholder="Enter Employee ID"
-                                value={values.employeeId}
-                                onChange={e => setValues({ ...values, employeeId: e.target.value })}
-                            />
+                        <label className='employee-label'>Assign to: {getEmployeeName(selectedEmployeeId)}</label>
+                       
+                        
+                            <div className='employee-filter'>
+                                <EmployeeSelect
+                                    employees={employees}
+                                    selectedEmployeeId={selectedEmployeeId}
+                                    handleEmployeeChange={handleEmployeeChange}
+                                />
+                            </div>
                         </div>
                     </div>
 
@@ -437,3 +467,6 @@ function CardComponent({ handleClose }) {
 }
 
 export default CardComponent;
+     
+
+   
