@@ -280,6 +280,9 @@ import './popup.css'; // Import your CSS file
 import axios from 'axios';
 import EmployeeSelect from './EmployeeFilterComponent';
 import InventoryTypeSelect from './InventoryTypeFilterComponent';
+import  InputField from '../Assests/InputField'
+import DisplayValue from '../Assests/DisplayValue'
+import FileInput from '../Assests/FileInput'
 
 function CardComponent({ handleClose }) {
     const [values, setValues] = useState({
@@ -329,12 +332,14 @@ function CardComponent({ handleClose }) {
     };
 
     const handleFileChange = (e) => {
-        setValues({ ...values, file: e.target.files[0] });
+        const file = e.target.files[0];
+        setValues({ ...values, file: file , selectedFile: file?.name});
     };
 
     const handleImageChange = (e) => {
-        setValues({ ...values, image: e.target.files[0] });
-    };
+        const img = e.target.files[0];
+        setValues({ ...values, image: img, selectedImage: img?.name }); // Update both state properties
+      };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -344,9 +349,9 @@ function CardComponent({ handleClose }) {
             formData.append('image', values.image);
 
             const otherData = {
-                InventoryTypeId:selectedInventoryTypeId ,
+                InventoryTypeId:selectedInventoryTypeId,
                 InventoryName: values.InventoryName,
-                employeeId:selectedEmployeeId ,
+                employeeId:selectedEmployeeId,
                 CreatedBy: 2,
                 Deleted: values.Deleted
             };
@@ -395,64 +400,95 @@ function CardComponent({ handleClose }) {
         return employee ? employee.firstName +" " + employee.lastName: ''; 
     }
 
+    
+
 
     return (
         <div className="popup">
             <div className="popup-inner">
                 <form onSubmit={handleSubmit}>
-                    <div className="InventorySelect">
-                        <label className ='Inventory-label'>Select inventory type:</label>
-                        <div className ='mb-2'>
-                        <label className ='Inventory-label'>Inventory Type ID:{getInventoryTypeName(selectedInventoryTypeId)}</label>
+                    <h3 className='Add-Inventory-heading'>Add Inventory</h3>
+                  
+                       
+                       
+                      
                        
                            
-                            <div className='inventory-filter'>
+                            <div className='InventorySelect'>
                                 <InventoryTypeSelect
                                 inventoryTypes={inventoryTypes} 
                                 selectedInventoryTypeId={selectedInventoryTypeId} 
                                 handleInventoryTypeChange={handleInventoryTypeChange}
-                                    />
-                                </div>
+                                />
+                            </div>
                                
-                        </div>
-                    </div>
+                       
+                  
 
-                    <div className="employeeSelect">
+                    
                         
-                        <div className='mb-3'>
-                        <label className='employee-label'>Assign to: {getEmployeeName(selectedEmployeeId)}</label>
+                        
                        
                         
-                            <div className='employee-filter'>
+                            <div className='employeeSelect'>
                                 <EmployeeSelect
                                     employees={employees}
                                     selectedEmployeeId={selectedEmployeeId}
                                     handleEmployeeChange={handleEmployeeChange}
                                 />
-                            </div>
-                        </div>
+                           
+                       
                     </div>
 
                     <div className='Inventoryname'>
-                        <label className="InventoryName-label">Inventory Name:</label><br />
-                        <input
-                            type="text"
-                            name="InventoryName"
-                            className='form-control'
-                            placeholder="Enter Inventory Name"
-                            value={values.InventoryName}
-                            onChange={e => setValues({ ...values, InventoryName: e.target.value })}
-                        />
-                    </div>
+                            <InputField
+                                placeholder="Enter Inventory Name"
+                                value={values.InventoryName}
+                                onChange={e => setValues({ ...values, InventoryName: e.target.value })}
+                            
+                                
+                            /> 
+                     </div> 
+                     <div className='InventoryType-fill'>
+                            <DisplayValue
+                                placeholder="Selected Inventory Type"
+                                type="text"
+                                name="Inventory type"
+                                value={getInventoryTypeName(selectedInventoryTypeId)}
+                                
+                            /> 
+                     </div>
+                     <div className='Employee-fill'>
+                     <DisplayValue
+                                placeholder="Assigned To"
+                                type="text"
+                                name="employee"
+                                alue={getEmployeeName(selectedEmployeeId)}
+                                
+                            /> 
+                     </div>    
+                       
+                     {/* <label className ='Inventory-label'>Inventory Type ID:{getInventoryTypeName(selectedInventoryTypeId)}</label>
+                     <label className='employee-label'>Assign to: {getEmployeeName(selectedEmployeeId)}</label> */}
+                    {/* <div className='FileInput'>
+                        <label htmlFor="file">Choose file:</label><br/>
+                        <input type="file" id="file" name="file" onChange={handleFileChange}/>
+                    </div> */}
 
-                    <div className='FileInput'>
-                        <label htmlFor="file">Choose file:</label><br />
-                        <input type="file" id="file" name="file" onChange={handleFileChange} />
-                    </div>
-                    <div className='imageInput'>
-                        <label htmlFor="image">Choose image:</label><br />
-                        <input type="file" id="image" name="image" onChange={handleImageChange} />
-                    </div>
+                    <FileInput
+                        button_label_1= "choose file"
+                        button_label_2= {values.selectedFile || "No Files selected"}
+                        onChange={handleFileChange}
+                       
+                    />
+
+
+                    <FileInput
+                        button_label_1= "choose Image"
+                        button_label_2= {values.selectedImage || "No images selected"}
+                        onChange={handleImageChange}
+                       
+                    />
 
                     <div className="button-submit">
                         <button type="submit">Add New Inventory</button>

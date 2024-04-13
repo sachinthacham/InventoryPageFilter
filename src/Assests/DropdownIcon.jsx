@@ -5,7 +5,7 @@ const DropdownIcon = ({size,color }) => {
         color:color 
        
     }
-    return <i class="fa-solid fa-chevron-right" style={iconStyle}></i>
+    return <i className="fa-solid fa-chevron-right" style={iconStyle}></i>
     // <i class="fa-solid fa-circle-chevron-down" ></i>;
   };
   

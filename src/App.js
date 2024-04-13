@@ -3,6 +3,7 @@
 import InventoryCard from './stuff/ExpandCard';
 import InventoryFilter from './stuff/FilterMethod';
 import CardComponent from './stuff/PopupCard';
+
 //import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css'; 
@@ -12,6 +13,8 @@ import DropdownMenu from './stuff/DropdownMenu'
 import AdvancedButton from './stuff/AdvancedButton'
 import MyTable from './stuff/Table';
 import '@fortawesome/fontawesome-free/css/all.css';
+import CustomFileInput from './stuff/CheckFileInput'
+import DisplayValue from './Assests/DisplayValue'
 
 
 
@@ -26,8 +29,10 @@ const App = () => {
       </div>
       <Route exact path = "/" component = {InventoryFilter} /> */}
       {/* <Create/> */}
-       <InventoryFilter/>  
-      
+       <InventoryFilter/> 
+        {/* <InputField/> */}
+       {/* <CustomFileInput/> */}
+      {/* <DisplayValue/> */}
       {/* <DropdownMenu/> */}
       {/* <AdvancedButton >Click Me</AdvancedButton> */}
       

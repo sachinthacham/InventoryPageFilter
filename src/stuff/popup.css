@@ -18,9 +18,11 @@
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    width:1000px;
+    width:1200px;
+  
     
 }
+
 
 .close-btn {
    
@@ -28,41 +30,54 @@
 }
 .employeeSelect{
     position: relative;
-    right:200px;
+    right:600px;
     bottom: 22px;
+    width:300px;
+    margin-left: 60px;
    
 }
 .InventorySelect{
     position: relative;
-    right:-150px;
-    top:50px;
+   right: 280px;
+   top:37px;
+   width: 300px;
+   margin-left: 60px;
    
     
 }
-.inventory-label{
-    position: relative;
-    left:1010px;
-}
-.Inventory-label{
-    position: relative;
-    right:-153px;
-}
-.form-control{
-    width:350px;
-    height:50px;
-}
+
+
 .Inventoryname{
     position:relative;
-    right:203px;
+    bottom:380px;
+    right:250px;
+
     
 }
-.InventoryName-label{
-    position: relative;
-    right:110px;
-}
+
 
 .button-submit{
     position: relative;
     top:-50px;
     right:400px;
+}
+.Add-Inventory-heading{
+    color: rgb(246, 49, 147);
+    font-size:30px ;
+    position: relative;
+    right:430px;
+    
+}
+.InventoryType-fill{
+    position: relative;
+    bottom: 330px;
+    right:250px;
+}
+.Employee-fill{
+    position: relative;
+    bottom: 270px;
+    right:250px;
+}
+.button-submit{
+
 }

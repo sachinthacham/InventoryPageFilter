@@ -63,4 +63,35 @@
     position: relative;
     top: 200px;
 } 
- 
+.pagination button{
+    height:50px;
+    width:50px;
+    position:"relative";
+    margin: auto;
+    left:"600px";
+    right:200px;
+    border: none;
+    margin: 5px;
+
+}
+.pagination{
+   
+    width: 400px;
+    height:50px;
+    position: relative;
+    top:250px;
+    left:19%;
+    margin-bottom: 100px;
+    display: inline-block;
+    justify-content: space-between;
+   
+}
+
+  
+.pagination button:hover {
+    background-color: rgb(216, 211, 211); /* Change color on hover */
+  }
+  
+  .pagination button.active {
+    background-color: #ec1f7f; /* Change color when active */
+  }

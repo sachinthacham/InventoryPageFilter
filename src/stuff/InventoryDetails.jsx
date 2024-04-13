@@ -8,20 +8,27 @@ import DeleteIcon from '../Assests/DeleteIcon'
 import EditIcon from '../Assests/EditIcon'
 import DropdownIcon from '../Assests/DropdownIcon'
 
-const InventoryCard = ({ inventories }) => {
+
+const InventoryCard = ({ inventories,  deleted}) => {
     const [selectedInventoryId, setSelectedInventoryId] = useState(null);
     const [selectedInventoryDetails, setSelectedInventoryDetails] = useState(null);
     const [selectedEditId, setSelectedEditId] = useState();
     const [expandedInventoryId, setExpandedInventoryId] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+   
+
+   
+   
    
 
     useEffect(() => {
-        if (selectedInventoryId) {
+        if (selectedInventoryId || deleteId) {
             fetchInventoryDetails();
+
         }
-    }, [selectedInventoryId]);
+    }, [selectedInventoryId,deleteId]);
 
     const fetchInventoryDetails = async () => {
         try {
@@ -36,6 +43,33 @@ const InventoryCard = ({ inventories }) => {
             console.error('Error fetching inventory details:', error);
         }
     };
+
+    const handledelete = async () => {
+       
+        try {
+            const confirmed = window.confirm('Are you sure you want to delete this inventory?');
+            if(confirmed){
+            const formData = new FormData();
+            const otherData = {
+                deleted:true,
+                deletedBy:3
+            };
+            formData.append('otherData', JSON.stringify(otherData));
+            const res = await axios.put(`https://localhost:7166/api/inventory/delete/${deleteId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(res);
+            window.alert('Inventory deleted successfully');
+        }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+
+    
 
     const handleClick = () => {
         setShowModal(true);
@@ -54,22 +88,35 @@ const InventoryCard = ({ inventories }) => {
         handleInventoryChange(selectedInventoryId);
     };
 
+   
+
+    const handleClosePopup = () => {
+        setShowPopup(false); // Set showPopup to false to close the popup
+    };
+
     const handleEditClick = (selectedEditId) => {
         setSelectedEditId(selectedEditId);
         setSelectedInventoryDetails(selectedInventoryDetails);
         setShowPopup(true); // Set showPopup to true to open the popup
     };
 
-    const handleClosePopup = () => {
-        setShowPopup(false); // Set showPopup to false to close the popup
-    };
+    const handledelete1 = (deleteId) => {
+        setDeleteId(deleteId);
+        handledelete();
+    }
+  //////////////////
+ 
+///////////////
+  
 
     
     return (
-     <>   
+     <>  
+    
+    
         <div className="inventory-card-container">
                 {inventories.map((inventory) => (
-                    <>
+                    <div key={inventory.inventoryId}>
                         <div
                             key={inventory.inventoryId}
                             //className='initial-card'
@@ -96,22 +143,24 @@ const InventoryCard = ({ inventories }) => {
                         selectedInventoryDetails.inventoryId === inventory.inventoryId && (
                             <div className="details">
                                 <div className="button_arrange">
-                                    <button style={{width:"30px",backgroundColor:"white",border:"white"}} ><DeleteIcon className="deleteIcon" size="30px" color="red"/></button>
+                                    <button style={{width:"30px",backgroundColor:"white",border:"white"}} onClick={() => handledelete1(inventory.inventoryId)}><DeleteIcon className="deleteIcon" size="30px" color="red"/></button>
                                     <button style={{width:"30px",backgroundColor:"white",border:"white"}} onClick={() => handleEditClick(inventory.inventoryId)}><EditIcon className="editIcon"  size="30px" color="black"/></button>
                                 </div>
                                
-                                <p className='InventoryName-ex'>Inventory Name: {selectedInventoryDetails.inventoryName}</p>
-                                <div className='InventoryType-ex'>
-                                <p >Inventory Type ID: {selectedInventoryDetails.inventoryTypeId}</p>
+                                <p className ='InventoryName-ex'>Inventory Name: {selectedInventoryDetails.inventoryName}</p>
+                                <div className ='InventoryType-ex'>
+                                <p >Inventory Type ID: {selectedInventoryDetails.inventoryType.inventoryType}</p>
                                 </div>
                                 <div className='AssignedEmployee'>
-                                <p >Assigned to:{selectedInventoryDetails.employeeId}</p>
+                                <p >Assigned to:{selectedInventoryDetails.employee.firstName}</p>
                                 </div>
 
                                
                                 <div className='InventoryFile-ex'>
                                     
-                                    <PdfViewer  pdfUrl={"https://localhost:7166/" + selectedInventoryDetails.fileUrl} thumbnailUrl = {"https://localhost:7166/"+"uploads/60ac5160-0411-42bd-bca0-87da4291182e_async await in js.png"}/>
+                                    {/* <PdfViewer  pdfUrl={"https://localhost:7166/" + selectedInventoryDetails.fileUrl} thumbnailUrl = {"https://localhost:7166/"+"uploads/60ac5160-0411-42bd-bca0-87da4291182e_async await in js.png"}/> */}
+                                    <ImagePopup imageUrl = { selectedInventoryDetails.imageUrl}/>
+                                
                                 </div>
                                 <div className='InventoryImage-ex'>
                                     
@@ -125,7 +174,7 @@ const InventoryCard = ({ inventories }) => {
                         
                         </div>           
                             
-                    </>
+                    </div>
                     
                 ))}
         
@@ -145,6 +194,7 @@ const InventoryCard = ({ inventories }) => {
             handleClose={handleClosePopup} />
         )}
         </div> 
+        
           
     </>
     
@@ -152,6 +202,8 @@ const InventoryCard = ({ inventories }) => {
 };
 
 export default InventoryCard;
+
+
 
 
 

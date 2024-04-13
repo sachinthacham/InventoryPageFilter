@@ -18,6 +18,7 @@
 
 import React, { useState } from 'react';
 import './DropdownMenu.css'
+import DropdownIcon2 from '../Assests/Dropdown2'
 
 function EmployeeSelect({ employees, selectedEmployeeId, handleEmployeeChange }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,35 +28,45 @@ function EmployeeSelect({ employees, selectedEmployeeId, handleEmployeeChange })
     };
 
     const handleSelect = (employeeId) => {
-        selectedEmployeeId = employeeId ; 
+        selectedEmployeeId = employeeId;
         handleEmployeeChange(employeeId);
         setIsOpen(false); // Close the dropdown after selection
-        
     };
 
     return (
         <div className="employee-select">
             <div className="dropdown-container">
-            <button htmlFor = "employee" className = "dropdown-toggle" onClick = {toggleDropdown}>
-                select a Employee
-            </button>
-            {isOpen && (
-                <ul id="employee" className='dropdown-menu'>
-                    {/* <li className='option-list' onClick={() => handleSelect('')}>
-                        Select an employee
-                    </li> */}
-                    {employees.map(employee => (
-                        <li key={employee.employeeId} value={employee.employeeId} className = 'dropdown-item' onClick = {() => handleSelect(employee.employeeId)}>
-                            {employee.firstName} {employee.lastName}
-                        </li>
-                    ))}
-                </ul>
-            )}
+                <div className="dropdown-toggle">
+                    <label> Select an Employee </label>
+                    <button htmlFor="employee" onClick={toggleDropdown}>
+                        <DropdownIcon2 className="dropdown-button" size="30px" color="black"/> 
+                    </button>
+                </div>
+                {isOpen && (
+                    <ul id="employee" className='dropdown-menu'>
+                        {employees.length > 3 ? ( // Check if employees length is greater than 3
+                            <div className="scrollable-menu">
+                                {employees.map(employee => (
+                                    <li key={employee.employeeId} value={employee.employeeId} className='dropdown-item' onClick={() => handleSelect(employee.employeeId)}>
+                                        {employee.firstName} {employee.lastName}
+                                    </li>
+                                ))}
+                            </div>
+                        ) : (
+                            employees.map(employee => (
+                                <li key={employee.employeeId} value={employee.employeeId} className='dropdown-item' onClick={() => handleSelect(employee.employeeId)}>
+                                    {employee.firstName} {employee.lastName}
+                                </li>
+                            ))
+                        )}
+                    </ul>
+                )}
             </div>
         </div>
     );
 }
 
 export default EmployeeSelect;
+
 
 
