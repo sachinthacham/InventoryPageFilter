@@ -79,7 +79,7 @@
     right:250px;
 }
 
-.FileInput{
+.file-section{
     width:280px;
     background-color: aqua;
     border: 2px soli black;
@@ -92,7 +92,7 @@
     bottom: -30px;
    
 }
-.imageInput{
+.image-section{
     width:280px;
     border: 2px soli black;
     border-radius: 5px;

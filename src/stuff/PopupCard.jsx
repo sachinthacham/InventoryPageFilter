@@ -283,6 +283,9 @@ import InventoryTypeSelect from './InventoryTypeFilterComponent';
 import  InputField from '../Assests/InputField'
 import DisplayValue from '../Assests/DisplayValue'
 import FileInput from '../Assests/FileInput'
+import  AdvancedButton from '../stuff/AdvancedButton'
+import ImageInput from '../Assests/ImageInput'
+
 
 function CardComponent({ handleClose }) {
     const [values, setValues] = useState({
@@ -333,13 +336,14 @@ function CardComponent({ handleClose }) {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setValues({ ...values, file: file , selectedFile: file?.name});
+        setValues({ ...values, file: file });
     };
-
+    
     const handleImageChange = (e) => {
         const img = e.target.files[0];
-        setValues({ ...values, image: img, selectedImage: img?.name }); // Update both state properties
-      };
+        setValues({ ...values, image: img }); // Update both state properties
+    };
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -367,9 +371,9 @@ function CardComponent({ handleClose }) {
             handleClose();
             // Reset form values
             setValues({
-                InventoryTypeId: '',
+                InventoryTypeId: 5,
                 InventoryName: '',
-                employeeId: '',
+                employeeId: 4,
                 CreatedBy: 2,
                 Deleted: false,
                 file: null,
@@ -436,19 +440,19 @@ function CardComponent({ handleClose }) {
                                     selectedEmployeeId={selectedEmployeeId}
                                     handleEmployeeChange={handleEmployeeChange}
                                 />
-                           
+                            
                        
                     </div>
 
                     <div className='Inventoryname'>
-                            <InputField
+                             <InputField
                                 placeholder="Enter Inventory Name"
                                 value={values.InventoryName}
                                 onChange={e => setValues({ ...values, InventoryName: e.target.value })}
                             
                                 
-                            /> 
-                     </div> 
+                            />  
+                     </div>  
                      <div className='InventoryType-fill'>
                             <DisplayValue
                                 placeholder="Selected Inventory Type"
@@ -458,12 +462,12 @@ function CardComponent({ handleClose }) {
                                 
                             /> 
                      </div>
-                     <div className='Employee-fill'>
-                     <DisplayValue
+                       <div className='Employee-fill'>
+                   <DisplayValue
                                 placeholder="Assigned To"
                                 type="text"
                                 name="employee"
-                                alue={getEmployeeName(selectedEmployeeId)}
+                                value={getEmployeeName(selectedEmployeeId)}
                                 
                             /> 
                      </div>    
@@ -474,27 +478,73 @@ function CardComponent({ handleClose }) {
                         <label htmlFor="file">Choose file:</label><br/>
                         <input type="file" id="file" name="file" onChange={handleFileChange}/>
                     </div> */}
+                    
+                    <div className='FileInput'>
+    <div>
+        <label htmlFor="fileInput" className="custom-file-upload">
+            Choose file
+        </label>
+    </div>
+    <input
+        type="file"
+        id="fileInput"
+        onChange={handleFileChange}
+        style={{ display: "none", border: "2px solid #d44694" }}
+    />
+    <input
+        type='text'
+        readOnly
+        value={values.file ? values.file.name : "No Files selected"}
+        className="custom-file-upload2"
+        style={{ border: "2px solid #d44694" }}
+    />
+</div>
 
-                    <FileInput
-                        button_label_1= "choose file"
-                        button_label_2= {values.selectedFile || "No Files selected"}
-                        onChange={handleFileChange}
+                   
+                   
+
+<div className='imageInput'>
+    <div>
+        <label htmlFor="imageFile" className="custom-file-upload">
+            Choose image
+        </label>
+    </div>
+    <input
+        type="file"
+        id="imageFile"
+        name="imageFile"
+        onChange={handleImageChange}
+        style={{ display: "none", border: "2px solid #d44694" }}
+    />
+    <input
+        type='text'
+        readOnly
+        value={values.image ? values.image.name : "No images selected"}
+        className="custom-file-upload2"
+        style={{ border: "2px solid #d44694" }}
+    /> 
+</div>
+                
+
+
+
+                  
+
+                   
+
+                    <div className = "button-submit">
+                    <AdvancedButton
+                        type="submit"
+                    >Submit</AdvancedButton>
                        
-                    />
-
-
-                    <FileInput
-                        button_label_1= "choose Image"
-                        button_label_2= {values.selectedImage || "No images selected"}
-                        onChange={handleImageChange}
-                       
-                    />
-
-                    <div className="button-submit">
-                        <button type="submit">Add New Inventory</button>
                     </div>
                     <div className="button-close">
-                        <button onClick={handleClose}>Cancel</button>
+                       
+                        <AdvancedButton
+                        onClick={handleClose}
+                        type="submit"
+                        
+                    >Cancel</AdvancedButton>
                     </div>
                 </form>
             </div>

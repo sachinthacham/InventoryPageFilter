@@ -16,7 +16,7 @@
     cursor: pointer;
     width:280px;
     height:60px;
-    border: 2px solid black;
+    border: 2px solid #d44694;
     display: flex;
     justify-content: space-between;
     border-radius: 5px;
@@ -54,7 +54,7 @@
     display: flex;
     justify-content: space-between;
     width:280px;
-    height:60px;
+    height:40px;
    
 }
 
@@ -69,7 +69,7 @@
   }
   
   .scrollable-menu {
-    max-height: 200px; /* Adjust the maximum height as needed */
+    max-height: 180px; /* Adjust the maximum height as needed */
     overflow-y: auto;
     overflow-x: hidden;
   }

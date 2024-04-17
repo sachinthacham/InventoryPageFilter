@@ -395,7 +395,7 @@ function InventoryFilter() {
                     handleInventoryTypeChange={handleInventoryTypeChange}
                 />
             </div>
-            <div className="search-bar" style={{backgroundColor:"green",width:"200px"}}>
+            <div className="search-bar" style={{backgroundColor:"green",width:"200px",position:"relative",}}>
                 <input
                     type="text"
                     placeholder="Search by inventory name"

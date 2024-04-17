@@ -1,34 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import './popup.css'; // Import your CSS file
 import axios from 'axios';
+import './ExpandCard.css'
 import CardComponent from './EditInventory';
 import ImagePopup from './ImagePopup';
-import PdfViewer from './PdfView';
+//import PdfView from './PdfView'
 import DeleteIcon from '../Assests/DeleteIcon'
 import EditIcon from '../Assests/EditIcon'
 import DropdownIcon from '../Assests/DropdownIcon'
+import ImageWithPDFViewer from './ImageWithPdfViwer'
 
 
-const InventoryCard = ({ inventories,  deleted}) => {
+const InventoryCard2 = ({ inventories,  deleted}) => {
     const [selectedInventoryId, setSelectedInventoryId] = useState(null);
     const [selectedInventoryDetails, setSelectedInventoryDetails] = useState(null);
     const [selectedEditId, setSelectedEditId] = useState();
     const [expandedInventoryId, setExpandedInventoryId] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    
     const [deleteId, setDeleteId] = useState(null);
    
 
-   
+  
    
    
 
-    useEffect(() => {
-        if (selectedInventoryId || deleteId) {
-            fetchInventoryDetails();
-
-        }
-    }, [selectedInventoryId,deleteId]);
+    
 
     const fetchInventoryDetails = async () => {
         try {
@@ -43,6 +40,15 @@ const InventoryCard = ({ inventories,  deleted}) => {
             console.error('Error fetching inventory details:', error);
         }
     };
+
+    useEffect(() => {
+        if (selectedInventoryId) {
+            fetchInventoryDetails();
+
+        }
+    }, [selectedInventoryId,fetchInventoryDetails]);
+
+   
 
     const handledelete = async () => {
        
@@ -71,9 +77,7 @@ const InventoryCard = ({ inventories,  deleted}) => {
 
     
 
-    const handleClick = () => {
-        setShowModal(true);
-    };
+   
 
     const toggleExpansion = (InventoryId) => {
         setExpandedInventoryId(InventoryId === expandedInventoryId ? null : InventoryId);
@@ -131,6 +135,7 @@ const InventoryCard = ({ inventories,  deleted}) => {
                                         </div>
                                    <div className='inventorylist_init-name'>
                                         {inventory.inventoryName}
+                                        
                                     </div>   
                                         
                                     </li>
@@ -146,26 +151,30 @@ const InventoryCard = ({ inventories,  deleted}) => {
                                     <button style={{width:"30px",backgroundColor:"white",border:"white"}} onClick={() => handledelete1(inventory.inventoryId)}><DeleteIcon className="deleteIcon" size="30px" color="red"/></button>
                                     <button style={{width:"30px",backgroundColor:"white",border:"white"}} onClick={() => handleEditClick(inventory.inventoryId)}><EditIcon className="editIcon"  size="30px" color="black"/></button>
                                 </div>
-                               
-                                <p className ='InventoryName-ex'>Inventory Name: {selectedInventoryDetails.inventoryName}</p>
+                                <div className ='InventoryName-ex'>
+                                    <p >Inventory Name: {selectedInventoryDetails.inventoryName}</p>
+                                </div>
+                                
                                 <div className ='InventoryType-ex'>
-                                <p >Inventory Type ID: {selectedInventoryDetails.inventoryType.inventoryType}</p>
+                                <p>Inventory Type : {selectedInventoryDetails.inventoryType.inventoryType}</p>
                                 </div>
                                 <div className='AssignedEmployee'>
                                 <p >Assigned to:{selectedInventoryDetails.employee.firstName}</p>
                                 </div>
 
-                               
+
                                 <div className='InventoryFile-ex'>
-                                    
-                                    {/* <PdfViewer  pdfUrl={"https://localhost:7166/" + selectedInventoryDetails.fileUrl} thumbnailUrl = {"https://localhost:7166/"+"uploads/60ac5160-0411-42bd-bca0-87da4291182e_async await in js.png"}/> */}
-                                    <ImagePopup imageUrl = { selectedInventoryDetails.imageUrl}/>
-                                
+                                        <ImageWithPDFViewer 
+                                        imageUrl2={"https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png"} 
+                                        pdfUrl={selectedInventoryDetails.fileUrl} />
                                 </div>
+                            
+                               
+                                
                                 <div className='InventoryImage-ex'>
                                     
                                     
-                                   <ImagePopup imageUrl = {"https://localhost:7166/" + selectedInventoryDetails.imageUrl}/>
+                                   <ImagePopup imageUrl = {selectedInventoryDetails.imageUrl}/>
                                 </div>
                             </div>
                         )}
@@ -185,9 +194,12 @@ const InventoryCard = ({ inventories,  deleted}) => {
         {selectedInventoryDetails && selectedEditId && showPopup && (
             <CardComponent 
             inventoryName={selectedInventoryDetails.inventoryName} 
-            inventoryTypeId={selectedInventoryDetails.inventoryTypeId}
-            employeeId={selectedInventoryDetails.employeeId}
+            inventoryType= {selectedInventoryDetails.inventoryType.inventoryType}
+            firstName={selectedInventoryDetails.employee.firstName}
+            lastName= {selectedInventoryDetails.employee.lastName}
             fileUrl={selectedInventoryDetails.fileUrl}
+            employeeId={selectedInventoryDetails.employeeId}
+            InventoryTypeId={selectedInventoryDetails.InventoryTypeId}
             imageUrl={selectedInventoryDetails.imageUrl}
             initialData={selectedInventoryDetails}
             selectedEditId={selectedEditId} 
@@ -201,12 +213,6 @@ const InventoryCard = ({ inventories,  deleted}) => {
     );
 };
 
-export default InventoryCard;
-
-
-
-
-
-
+export default InventoryCard2;
 
 

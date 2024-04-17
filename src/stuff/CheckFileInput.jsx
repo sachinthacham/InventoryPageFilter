@@ -22,7 +22,7 @@ function CustomFileInput() {
                 onChange={handleFileChange}
             />
             {/* Display the selected file name */}
-          
+            <div className="file-display">{selectedFile ? selectedFile.name : "No file chosen"}</div>
         </div>
     );
 }

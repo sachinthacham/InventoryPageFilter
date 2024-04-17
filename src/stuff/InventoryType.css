@@ -35,7 +35,7 @@
  .heading{
     width:30%;
     position: relative;
-    left:300px;
+    left:350px;
     
     color:#900546;
     font-size: 30px;
@@ -45,7 +45,7 @@
     width:30%;
     position:relative;
     left:270px;
-    top:100px;
+    top:180px;
 }
 
 
@@ -89,7 +89,7 @@
 
   
 .pagination button:hover {
-    background-color: rgb(216, 211, 211); 
+    background-color: rgb(216, 211, 211);
   }
   
   .pagination button.active {

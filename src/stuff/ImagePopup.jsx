@@ -12,7 +12,7 @@ function ImagePopup({ imageUrl }) {
 
     return (
         <div>
-            <img src={imageUrl} alt="Thumbnail" onClick={handleClick} className="thumbnail-image" style={{height:"80px",width:"80px"}}/>
+            <img src={imageUrl} alt="Thumbnail" onClick={handleClick} className="thumbnail-image" style={{height:"100px",width:"100px"}}/>
             {showModal && (
                 <div className="modal">
                     <div className="modal-content">

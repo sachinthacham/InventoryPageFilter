@@ -155,20 +155,30 @@
 import React, { useState, useEffect } from 'react';
 import './popup.css'; // Import your CSS file
 import axios from 'axios';
+import  InputField from '../Assests/InputField';
+import DisplayValue from '../Assests/DisplayValue';
+import FileInput from '../Assests/FileInput';
+import  AdvancedButton from '../stuff/AdvancedButton';
+import EmployeeSelect from './EmployeeFilterComponent';
+import InventoryTypeSelect from './InventoryTypeFilterComponent';
 
 function CardComponent({
     inventoryName,
-    inventoryTypeId,
-    employeeId,
+    InventoryTypeId,
+    inventoryType,
+    firstName,
+    lastName,
     fileUrl,
     imageUrl,
     selectedEditId,
     handleClose}) 
 {
     const [values, setValues] = useState({
-        InventoryTypeId: inventoryTypeId,
+        inventoryType: inventoryType,
         InventoryName: inventoryName,
-        employeeId: employeeId,
+        InventoryTypeId:InventoryTypeId,
+        firstName: firstName,
+        lastName:lastName,
         CreatedBy: 2,
         Deleted: false,
         file: null,
@@ -176,6 +186,11 @@ function CardComponent({
         selectedImage: imageUrl ? imageUrl.split('/').pop() : null,
         selectedFile: fileUrl ? fileUrl.split('/').pop() : null
     });
+
+    const [inventoryTypes, setInventoryTypes] = useState([]);
+    const [employees, setEmployees] = useState([]);
+    const [selectedEmployeeId, setSelectedEmployeeId] = useState('');
+    const [selectedInventoryTypeId, setSelectedInventoryTypeId] = useState('');
     
 
     const handleChange = (e) => {
@@ -186,6 +201,12 @@ function CardComponent({
         }));
     };
 
+    useEffect(() => {
+        fetchInventoryTypes();
+        fetchEmployees();
+    }, []);
+
+
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setValues({ ...values, file: file , selectedFile: file?.name});
@@ -195,10 +216,37 @@ function CardComponent({
         const img = e.target.files[0];
         setValues({ ...values, image: img, selectedImage: img?.name }); // Update both state properties
       };
+
+      const fetchInventoryTypes = async () => {
+        try {
+            const response = await fetch('https://localhost:7166/api/inventory_type/inventory_types');
+            if (!response.ok) {
+                throw new Error('Failed to fetch inventory types');
+            }
+            const data = await response.json();
+            setInventoryTypes(data);
+        } catch (error) {
+            console.error('Error fetching inventory types:', error);
+        }
+    };
+
+    const fetchEmployees = async () => {
+        try {
+            const response = await fetch('https://localhost:7166/api/employee/Employee');
+            if (!response.ok) {
+                throw new Error('Failed to fetch employees');
+            }
+            const data = await response.json();
+            setEmployees(data);
+        } catch (error) {
+            console.error('Error fetching employees:', error);
+        }
+    };
+
     
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault(); 
         try {
             const formData = new FormData();
             formData.append('file', values.file);
@@ -209,7 +257,7 @@ function CardComponent({
                 InventoryName: values.InventoryName,
                 employeeId: values.employeeId,
                 CreatedBy: 2,
-                Deleted:values.Deleted
+                Deleted: values.Deleted
             };
 
             formData.append('otherData', JSON.stringify(otherData));
@@ -226,74 +274,109 @@ function CardComponent({
             console.log(err);
         }
     };
-
-    const handleCancel = () => {
-        handleClose();
+    const handleEmployeeChange = (selectedEmployeeId) => {
+        
+        setSelectedEmployeeId(selectedEmployeeId);
     };
+
+    const handleInventoryTypeChange = (selectedInventoryTypeId) => {
+       
+        setSelectedInventoryTypeId(selectedInventoryTypeId);
+    };
+
+
 
     return (
         <div className="popup">
             <div className="popup-inner">
                 <form onSubmit={handleSubmit}>
-                    <div className="InventorySelect">
-                        <label className='Inventory-label'>Select inventory type:</label>
-                        <div className='mb-2'>
-                            <label htmlFor="InventoryTypeId">Inventory Type ID:</label>
-                            <input
-                                type="text"
-                                name="InventoryTypeId"
-                                className='form-control'
-                                placeholder="Enter Inventory Type ID"
-                                value={values.InventoryTypeId}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="employeeSelect">
-                        <label className='inventory-label'>Assign to:</label>
-                        <div className='mb-3'>
-                            <label htmlFor="employeeId">Employee ID:</label>
-                            <input
-                                type="text"
-                                name="employeeId"
-                                className='form-control'
-                                placeholder="Enter Employee ID"
-                                value={values.employeeId}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
-
-                    <div className='Inventoryname'>
-                        <label className="InventoryName-label">Inventory Name:</label><br />
-                        <input
-                            type="text"
-                            name="InventoryName"
-                            className='form-control'
-                            placeholder="Enter Inventory Name"
-                            value={values.InventoryName}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className='FileInput'>
+                <h3 className='Add-Inventory-heading'>Update Inventory</h3>
+                  
                        
-                        <input type="file" id="file" name="file" onChange={handleFileChange} style={{color:"white",position:"relative",left:"100px",top:"200px"}}/>
-                        <label>{values.selectedFile || "No image selected"}</label>
+                       
+                      
+                       
+                           
+                  <div className='InventorySelect'>
+                      <InventoryTypeSelect
+                      inventoryTypes={inventoryTypes} 
+                      selectedInventoryTypeId = {selectedInventoryTypeId} 
+                      handleInventoryTypeChange={handleInventoryTypeChange}
+                      />
+                  </div>
+                     
+            <div className='employeeSelect'>
+                      <EmployeeSelect
+                          employees={employees}
+                          selectedEmployeeId={selectedEmployeeId}
+                          handleEmployeeChange={handleEmployeeChange}
+                      />
+                 
+             
+            </div>
+
+                <div className='Inventoryname'>
+                            <InputField
+                                placeholder="Enter Inventory Name"
+                                value={values.InventoryName}
+                                onChange={handleChange}
+                            
+                                
+                            /> 
+                     </div> 
+                <div className='InventoryType-fill'>
+                            <DisplayValue
+                                placeholder="Selected Inventory Type"
+                                type="text"
+                                name="Inventory type"
+                                value={inventoryType}
+                                onChange={handleChange}
+                            /> 
+                     </div>
+                     <div className='Employee-fill'>
+                     <DisplayValue
+                                placeholder="Assigned To"
+                                type="text"
+                                name="employee"
+                                value={firstName +" "+ lastName}
+                                onChange={handleChange}
+                            /> 
+                     </div>
+
+                   
+
+                     <div className='file-section'>
+                    <FileInput
+                        button_label_1= "choose file"
+                        button_label_2= {values.selectedFile || "No Files selected"}
+                        onChange={handleFileChange}
+                       
+                    />
+                    </div>
+                   
+
+                    <div className='image-section'>
+                    <FileInput
+                        button_label_1= "choose Image"
+                        button_label_2= {values.selectedImage || "No images selected"}
+                        onChange={handleImageChange}
+                       
+                    />
                     </div>
 
-                    <div className="imageInput">
-        
-        <input type="file" id="image" name="image" onChange={handleImageChange} style={{color:"white"}}/>
-        <label>{values.selectedImage || "No image selected"}</label> {/* Display selected filename or placeholder */}
-      </div>
-
-                    <div className="button-submit">
-                        <button type="submit">Update Inventory</button>
+                    <div className = "button-submit">
+                    <AdvancedButton
+                        type="submit"
+                    >Submit</AdvancedButton>
+                       
                     </div>
                     <div className="button-close">
-                        <button onClick={handleCancel}>Cancel</button>
+                       
+                        <AdvancedButton
+                        onClick={handleClose}
+                        type="submit"
+                        
+                    >Cancel</AdvancedButton>
                     </div>
                 </form>
             </div>
